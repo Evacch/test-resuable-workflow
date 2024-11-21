@@ -18,10 +18,10 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      # with:
-      #   repository: Evacch/test-resuable-workflow
-      #   ref: main
-      #   path: called-repo
+      with:
+        repository: Evacch/test-resuable-workflow
+        ref: main
+        path: called-repo
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -30,7 +30,7 @@ jobs:
       run: |
         python -m venv venv
         source venv/bin/activate
-        python main.py
+        python ./called-repo/main.py
     - name: Check all dir
-      # run: find ./called-repo -maxdepth 1 -type f -o -path "./called-repo/*" -type f
-      run: ls -la
+      run: find ./called-repo -maxdepth 1 -type f -o -path "./called-repo/*" -type f
+      # run: ls -la
