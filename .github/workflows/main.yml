@@ -1,0 +1,31 @@
+name: Burp CICD Scan
+on:  
+  workflow_call:
+    inputs:
+      start-url:
+        description: 'Enter the start URL'
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      start-url:
+        description: 'Enter the start URL'
+        required: true
+
+jobs:
+  burp-scan:
+    runs-on: [self-hosted]
+    timeout-minutes: 1440
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        repository: Evacch/test-resuable-workflow
+        ref: main
+        path: called-repo
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+    - name: Check all dir
+      run: find ./called-repo -maxdepth 1 -type f -o -path "./called-repo/*" -type f
